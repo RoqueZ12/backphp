@@ -1,18 +1,19 @@
 <?php
-require_once(__DIR__ . '/../database/db.php');
-// CORS Headers
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: https://reacfront.vercel.app");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 
-// Preflight
+require_once(__DIR__ . '/../database/db.php');
+
+// Obtener la conexión PDO
+$pdo = getConnection();
+
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
 }
 
-// Obtener datos JSON del frontend
 $data = json_decode(file_get_contents('php://input'), true);
 
 if (!isset($data['userId'], $data['cart']) || !is_array($data['cart'])) {
@@ -26,7 +27,6 @@ $cart = $data['cart'];
 try {
     $pdo->beginTransaction();
 
-    // verificamos si hay stock
     foreach ($cart as $item) {
         $stmt = $pdo->prepare("SELECT cantidad, nombre FROM productos WHERE id = ?");
         $stmt->execute([$item['id']]);
@@ -41,7 +41,6 @@ try {
         }
     }
 
-    // decrementamos stock
     foreach ($cart as $item) {
         $stmt = $pdo->prepare("UPDATE productos SET cantidad = cantidad - ? WHERE id = ?");
         $stmt->execute([$item['quantity'], $item['id']]);
