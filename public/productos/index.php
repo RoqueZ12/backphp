@@ -5,6 +5,8 @@ require __DIR__ . '/../../database/db.php';
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: https://reacfront.vercel.app");
 header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+
 
 $method = $_SERVER['REQUEST_METHOD'];
 $pdo = getConnection();
@@ -25,13 +27,13 @@ switch ($method) {
     case 'POST':
         $input = json_decode(file_get_contents("php://input"), true);
         $stmt = $pdo->prepare("INSERT INTO productos (nombre, cantidad, precio, image) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$input['nombre'], $input['precio'], $input['image'], $input['cantidad']]);
+        $stmt->execute([$input['nombre'], $input['cantidad'], $input['precio'], $input['image']]);
         echo json_encode(['success' => true, 'id' => $pdo->lastInsertId()]);
         break;
 
     case 'PUT':
         $input = json_decode(file_get_contents("php://input"), true);
-        $stmt = $pdo->prepare("UPDATE productos SET nombre=?, precio=?, imagen=? , cantidad=? WHERE id=?");
+        $stmt = $pdo->prepare("UPDATE productos SET nombre=?, precio=?, image=? , cantidad=? WHERE id=?");
         $stmt->execute([$input['nombre'], $input['precio'], $input['image'], $input['id'], $input['cantidad']]);
         echo json_encode(['success' => true]);
         break;
