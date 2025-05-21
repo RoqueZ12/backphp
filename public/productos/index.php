@@ -25,14 +25,14 @@ switch ($method) {
     case 'POST':
         $input = json_decode(file_get_contents("php://input"), true);
         $stmt = $pdo->prepare("INSERT INTO productos (nombre, cantidad, precio, image) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$input['nombre'], $input['precio'], $input['imagen'], $input['cantidad']]);
+        $stmt->execute([$input['nombre'], $input['precio'], $input['image'], $input['cantidad']]);
         echo json_encode(['success' => true, 'id' => $pdo->lastInsertId()]);
         break;
 
     case 'PUT':
         $input = json_decode(file_get_contents("php://input"), true);
         $stmt = $pdo->prepare("UPDATE productos SET nombre=?, precio=?, imagen=? , cantidad=? WHERE id=?");
-        $stmt->execute([$input['nombre'], $input['precio'], $input['imagen'], $input['id'], $input['cantidad']]);
+        $stmt->execute([$input['nombre'], $input['precio'], $input['image'], $input['id'], $input['cantidad']]);
         echo json_encode(['success' => true]);
         break;
 
