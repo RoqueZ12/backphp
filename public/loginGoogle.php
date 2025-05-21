@@ -5,7 +5,7 @@ use App\FirebaseAuth;
 
 // CORS headers
 header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: https://miniecommerce-dun.vercel.app");
+header("Access-Control-Allow-Origin: https://reacfront.vercel.app");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 
