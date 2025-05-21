@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../database/db.php';
+require_once(__DIR__ . '/../database/db.php');
 // CORS Headers
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: https://reacfront.vercel.app");
