@@ -1,7 +1,8 @@
 <?php
 require __DIR__ . '/../../vendor/autoload.php';
 require __DIR__ . '/../../database/db.php';
-require_once __DIR__ . '/../../controller/ProductController.php';
+require_once(__DIR__ . '../../../controller/ProductController.php');
+
 
 // CORS Headers
 header('Content-Type: application/json');
